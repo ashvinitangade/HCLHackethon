@@ -5,6 +5,14 @@
     {
       "library": "bootstrap@5.2.1",
       "destination": "wwwroot/bootstrap/"
+    },
+    {
+      "library": "datatable@2.0.2",
+      "destination": "wwwroot/lib/datatable/"
+    },
+    {
+      "library": "jqueryui@1.13.2",
+      "destination": "wwwroot/lib/jqueryui/"
     }
   ]
 }

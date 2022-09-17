@@ -1,0 +1,28 @@
+﻿@model SharpGaming.Models.RootCountry
+@{
+    ViewData["Title"] = "Sport";
+    Layout = "_Layout";
+}
+
+<h1>Country List</h1>
+
+<div>
+    <table id="myTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.countries)
+            {
+                <tr>
+                    <td>@item.id</td>
+                    <td>@item.name</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

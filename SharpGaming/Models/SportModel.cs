@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SharpGaming.Models
 {
     public class SportModel
     {
-        public int? id { get; set; }
+        [Key]
+        public int id { get; set; }
+       
         public string name { get; set; }
         public string translation { get; set; }
     }

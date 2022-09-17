@@ -81,6 +81,9 @@ namespace SharpGaming.Controllers
         [HttpPost]
         public IActionResult Tournament(int sports, int country,string lang)
         {
+            ViewBag.Sports = _context.Sports.ToList();
+            ViewBag.Country = _context.Countries.ToList();
+
             var apiSportData = new TournamentModel();
             string apiUrl = $"https://affiliate-feed.petfre.sgp.bet/1/sports/"+sports+"/tournaments?countryIds="+country+"&languageCode="+lang+"";
             HttpClient client = new HttpClient();
@@ -113,12 +116,49 @@ namespace SharpGaming.Controllers
         }
         public IActionResult Events()
         {
-
-            return View();
+            ViewBag.Tournament = _context.Tournaments.ToList();
+            return View(new EventModel());
         }
+
+        [HttpPost]
+        public IActionResult Events(int tournamentIds, int status,string startDate,string lang)
+        {
+            ViewBag.Tournament = _context.Tournaments.ToList();
+            var apiSportData = new EventModel();
+            string apiUrl = $"https://affiliate-feed.petfre.sgp.bet/1/tournaments/1/events?status="+status+"&dateStart="+startDate+"&languageCode="+lang+"";
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                apiSportData = JsonConvert.DeserializeObject<EventModel>(response.Content.ReadAsStringAsync().Result);
+            }
+
+            return View(apiSportData);
+        }
+
         public IActionResult Markets()
         {
-            return View();
+            ViewBag.Events = _context.Events.ToList();
+            ViewBag.Markets = _context.Markets.ToList();
+
+            return View(new MarketModelRoot());
+        }
+        [HttpPost]
+        public IActionResult Markets(int eventIds, int marketIds, string lang)
+        {
+            ViewBag.Events = _context.Events.ToList();
+            ViewBag.Markets = _context.Markets.ToList();
+
+            var apiSportData = new MarketModelRoot();
+            string apiUrl = $"https://affiliate-feed.petfre.sgp.bet/1/events/"+eventIds+"/markets?marketIds="+marketIds+"&languageCode="+lang+"";
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                apiSportData = JsonConvert.DeserializeObject<MarketModelRoot>(response.Content.ReadAsStringAsync().Result);
+            }
+
+            return View(apiSportData);
         }
     }
 }
